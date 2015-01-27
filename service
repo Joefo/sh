@@ -1,7 +1,7 @@
 #!/bin/bash
 PS3="please select the service to start: "
 
-select SERVICE in exit nginx memcache mysql redis reabbitmq php-fpm; do
+select SERVICE in exit nginx memcache mysql redis rabbitmq php-fpm; do
     case $SERVICE in
         nginx)
             pgrep -q nginx 
@@ -17,7 +17,7 @@ select SERVICE in exit nginx memcache mysql redis reabbitmq php-fpm; do
             ;;
         php-fpm)
             echo 'kill running php-fpm'
-            $HOME/dev/bin/tool/kill.sh php-fpm 1 > /dev/null
+            $HOME/dev/bin/kill php-fpm 1 > /dev/null
             sudo /usr/local/sbin/php-fpm --fpm-config /usr/local/etc/php-fpm.conf -D
             echo 'start php-fpm service'
             ;;
@@ -32,6 +32,12 @@ select SERVICE in exit nginx memcache mysql redis reabbitmq php-fpm; do
             [[ $? -eq 0 ]] && { echo 'redis-server is already running.'; continue; }
             redis-server >/dev/null &
             echo 'start redis-server service'
+            ;;
+        rabbitmq)
+            pgrep -q rabbitmq
+            [[ $? -eq 0 ]] && { echo 'rabbitmq-server is already running.'; continue; }
+            rabbitmq-server >/dev/null 2>&1 &
+            echo 'start rabbitmq-server'
             ;;
         exit)
             break
