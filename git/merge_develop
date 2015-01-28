@@ -42,9 +42,11 @@ function do_merge {
 
     read -p '请输入要合并的分支名,默认为develop: ' MERGE_BRANCH
     [[ -z $MERGE_BRANCH ]] && { MERGE_BRANCH='develop'; }
+    git branch -a | grep remotes/origin/$MERGE_BRANCH
+    [[ $? -ne 0 ]] && { rmsg "$MERGE_BRANCH 分支不存在"; return 1; }
     gmsg "start to merge $MERGE_BRANCH into master"
     git merge -m "merge origin/$MERGE_BRANCH into master" --no-ff origin/$MERGE_BRANCH
-    [[ $? -ne 0 ]] && { rmsg "分支不存在:$MERGE_BRANCH"; return 1; }
+    [[ $? -ne 0 ]] && { rmsg "存在冲突"; return 1; }
     gmsg 'merge done'
 
     grep -r -q '<<<<<<< HEAD' .
