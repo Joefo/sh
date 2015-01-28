@@ -1,5 +1,5 @@
 #!/bin/bash
-GIT_GROUP_TWO='git@git.ipo.com:hf-dev-2'
+GIT_GROUP='git@git.ipo.com'
 LOCAL_REPO=$HOME/Dev/Data/repo
 SOURCE_ROOT=$HOME/dev/bin/git
 rmsg() { echo -e "\033[31;49m$*\033[0m"; }
@@ -9,9 +9,10 @@ PS3="请输入要merge的项目名: "
 function do_merge {
     cd $LOCAL_REPO
     gmsg "chdir to $(pwd)"
-    APP_NAME=${1:?"未输入项目名"}
+    FULL_NAME=${1:?"未输入项目名"}
+    APP_NAME=$(cut -d/ -f2 <<< $FULL_NAME)
     echo $SOURCE_ROOT;
-    GIT_REPO=$GIT_GROUP_TWO/$APP_NAME
+    GIT_REPO=$GIT_GROUP:$FULL_NAME
     gmsg "选择的项目为: $APP_NAME"
 
     if [[ ! -d $APP_NAME ]]; then
