@@ -1,0 +1,4 @@
+#!/bin/bash
+USER=${1?'user'}
+HOST=${2?'remote host'}
+cat $HOME/.ssh/id_rsa.pub | ssh $USER@$HOST 'cat >> .ssh/authorized_keys'

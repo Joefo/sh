@@ -1,7 +1,7 @@
 #!/bin/bash
 GIT_GROUP='git@git.ipo.com'
-LOCAL_REPO=$HOME/Dev/Data/repo
-SOURCE_ROOT=$HOME/dev/bin/git
+LOCAL_REPO=$HOME/dev/data/repo
+SOURCE_ROOT=$HOME/bin/git
 rmsg() { echo -e "\033[31;49m$*\033[0m"; }
 gmsg() { echo -e "\033[32;49m$*\033[0m"; } 
 PS3="请输入要merge的项目名: "
