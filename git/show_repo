@@ -10,6 +10,7 @@ select GIT_APP in exit $(cat $HOME/bin/git/app.conf); do
             ;;
         *)
             echo "$GIT_REPO/${GIT_APP}.git"
+            git clone $GIT_REPO/${GIT_APP} 
             break
             ;;
     esac
